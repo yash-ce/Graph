@@ -1,0 +1,33 @@
+class Solution{
+public:
+    // Function to detect cycle in an undirected graph.
+    // const int N = 1e5+5;
+   
+    bool dfs(int vertex, int par, vector<int> adj[], bool vis[]){
+        vis[vertex] = true;
+        bool isLoopExists = false;
+        for(auto child: adj[vertex]){
+            if(vis[child] && child == par) continue;
+            if(vis[child]) return true;
+            isLoopExists |= dfs(child, vertex, adj, vis);
+            
+        }
+        
+        return isLoopExists;
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        bool ans = false;
+         bool vis[V+10];
+         memset(vis, 0, sizeof(vis));
+        for(int i=0;i<V;++i){
+            if(vis[i]) continue;
+            if(dfs(i, -1, adj, vis)){
+                ans = true;
+                break;
+            }
+        }
+        return ans;
+        
+    }
+};
